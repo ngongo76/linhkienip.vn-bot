@@ -1,0 +1,1067 @@
+{
+  "categories": {
+    "sensor_1": {
+      "title": "Sensor Array (1)",
+      "title_vi": "Mã cảm biến nhóm 1",
+      "entries": [
+        {
+          "code": "0X400",
+          "en": "Try to Reball Interposer",
+          "vi": "Đóng lại chip Interposer (Reball)"
+        },
+        {
+          "code": "0X800",
+          "en": "It's the Charging Port Flex",
+          "vi": "Cáp chân sạc"
+        },
+        {
+          "code": "0X1000",
+          "en": "It's the Proximity Flex Cable",
+          "vi": "Cáp cảm biến tiệm cận (Prox Flex)"
+        },
+        {
+          "code": "0X1800",
+          "en": "It's Both: Charging Port Flex & Prox Flex",
+          "vi": "Cả 2: Cáp chân sạc + Cáp tiệm cận"
+        },
+        {
+          "code": "0X4000",
+          "en": "It's part of the Battery",
+          "vi": "Liên quan đến pin"
+        },
+        {
+          "code": "0X10000",
+          "en": "It's the Power Button Flex",
+          "vi": "Cáp nút nguồn"
+        },
+        {
+          "code": "0X20000",
+          "en": "It's a Sandwich Board Issue / Gyro",
+          "vi": "Lỗi bo sandwich / Cảm biến con quay (Gyro)"
+        },
+        {
+          "code": "0X40000",
+          "en": "It's the Charging Port Flex",
+          "vi": "Cáp chân sạc"
+        },
+        {
+          "code": "0X60000",
+          "en": "It's the Proximity Flex Cable",
+          "vi": "Cáp cảm biến tiệm cận"
+        },
+        {
+          "code": "0X80000",
+          "en": "It's the Proximity Flex Cable",
+          "vi": "Cáp cảm biến tiệm cận"
+        },
+        {
+          "code": "0X140000",
+          "en": "It's the Charging Port & Power Button Flex or Barometer",
+          "vi": "Cáp chân sạc + Cáp nút nguồn HOẶC cảm biến khí áp"
+        },
+        {
+          "code": "0X180000",
+          "en": "It's the Prox Flex & Power Button Flex",
+          "vi": "Cáp tiệm cận + Cáp nút nguồn"
+        },
+        {
+          "code": "0X41",
+          "en": "It's a Battery Data issue",
+          "vi": "Lỗi dữ liệu pin (Battery Data)"
+        },
+        {
+          "code": "0X42",
+          "en": "Indicates a thermal issue, such as overheating",
+          "vi": "Lỗi nhiệt độ / Máy quá nhiệt"
+        },
+        {
+          "code": "0X51",
+          "en": "Indicates a problem with the device's security features or encryption",
+          "vi": "Lỗi bảo mật hoặc mã hóa của máy"
+        },
+        {
+          "code": "0X61",
+          "en": "Indicates a problem with the device's display, such as flickering or pixelation",
+          "vi": "Lỗi màn hình: nhấp nháy hoặc vỡ điểm ảnh"
+        },
+        {
+          "code": "0X63",
+          "en": "Indicates a problem with the device's accelerometer or motion sensor",
+          "vi": "Lỗi cảm biến gia tốc / cảm biến chuyển động"
+        },
+        {
+          "code": "0X64",
+          "en": "Indicates a problem with the device's microphone or audio input",
+          "vi": "Lỗi mic / cổng thu âm"
+        },
+        {
+          "code": "0X71",
+          "en": "Indicates a problem with the device's audio or speaker system",
+          "vi": "Lỗi hệ thống âm thanh / loa"
+        },
+        {
+          "code": "0X73",
+          "en": "Indicates a problem with the device's ambient light sensor or automatic brightness adjustment",
+          "vi": "Lỗi cảm biến ánh sáng môi trường / tự động chỉnh độ sáng"
+        },
+        {
+          "code": "0X74",
+          "en": "Indicates a problem with the device's speaker or audio output",
+          "vi": "Lỗi loa / ngõ ra âm thanh"
+        },
+        {
+          "code": "0X81",
+          "en": "Indicates a problem with the device's camera or imaging system",
+          "vi": "Lỗi camera / hệ thống chụp ảnh"
+        },
+        {
+          "code": "0X83",
+          "en": "Indicates a problem with the device's proximity sensor or screen auto-dimming feature",
+          "vi": "Lỗi cảm biến tiệm cận / tự tắt màn khi áp tai"
+        },
+        {
+          "code": "0X84",
+          "en": "Indicates a problem with the device's vibration motor or haptic feedback",
+          "vi": "Lỗi mô tơ rung / Taptic Engine"
+        },
+        {
+          "code": "0X91",
+          "en": "Indicates a problem with the device's network connectivity, such as Wi-Fi or cellular signal issues",
+          "vi": "Lỗi kết nối mạng: WiFi hoặc sóng di động"
+        },
+        {
+          "code": "0X93",
+          "en": "Indicates a problem with the device's gyroscope",
+          "vi": "Lỗi con quay hồi chuyển (Gyro)"
+        },
+        {
+          "code": "0X94",
+          "en": "Indicates a problem with the device's camera or imaging system",
+          "vi": "Lỗi camera / hệ thống chụp ảnh"
+        },
+        {
+          "code": "0X104",
+          "en": "Indicates a problem with the device's accelerometer or gravity sensor",
+          "vi": "Lỗi cảm biến gia tốc / cảm biến trọng lực"
+        },
+        {
+          "code": "0X114",
+          "en": "Indicates a problem with the device's gyroscope or rotation sensor",
+          "vi": "Lỗi con quay / cảm biến xoay"
+        },
+        {
+          "code": "0X124",
+          "en": "Indicates a problem with the device's magnetometer or compass sensor",
+          "vi": "Lỗi cảm biến từ trường / la bàn"
+        },
+        {
+          "code": "0X134",
+          "en": "Indicates a problem with the device's proximity sensor or light sensor",
+          "vi": "Lỗi cảm biến tiệm cận / cảm biến ánh sáng"
+        },
+        {
+          "code": "0X144",
+          "en": "Indicates a problem with the device's ambient temperature sensor",
+          "vi": "Lỗi cảm biến nhiệt độ môi trường"
+        },
+        {
+          "code": "0X154",
+          "en": "Indicates a problem with the device's humidity sensor",
+          "vi": "Lỗi cảm biến độ ẩm"
+        },
+        {
+          "code": "0X164",
+          "en": "Indicates a problem with the device's pressure sensor",
+          "vi": "Lỗi cảm biến áp suất"
+        },
+        {
+          "code": "0X174",
+          "en": "Indicates a problem with the device's accelerometer or gravity sensor",
+          "vi": "Lỗi cảm biến gia tốc / trọng lực"
+        },
+        {
+          "code": "0X184",
+          "en": "Indicates a problem with the device's gyroscope or rotation sensor",
+          "vi": "Lỗi con quay / cảm biến xoay"
+        },
+        {
+          "code": "0X194",
+          "en": "Indicates a problem with the device's magnetometer or compass sensor",
+          "vi": "Lỗi cảm biến từ trường / la bàn"
+        },
+        {
+          "code": "0X204",
+          "en": "Indicates a problem with the device's humidity sensor or moisture detection system",
+          "vi": "Lỗi cảm biến độ ẩm / phát hiện nước"
+        },
+        {
+          "code": "0X214",
+          "en": "Indicates a problem with the device's pressure sensor or air pressure detection mechanism",
+          "vi": "Lỗi cảm biến áp suất / cơ chế đo áp suất không khí"
+        }
+      ]
+    },
+    "sensor_2": {
+      "title": "Sensor Array (2)",
+      "title_vi": "Mã cảm biến nhóm 2",
+      "entries": [
+        {
+          "code": "0X1A4",
+          "en": "Indicates a problem with the device's proximity sensor or light sensor",
+          "vi": "Lỗi cảm biến tiệm cận / cảm biến ánh sáng"
+        },
+        {
+          "code": "0X1B4",
+          "en": "Indicates a problem with the device's ambient light sensor or automatic brightness adjustment",
+          "vi": "Lỗi cảm biến ánh sáng môi trường / tự chỉnh độ sáng"
+        },
+        {
+          "code": "0X1C4",
+          "en": "Indicates a problem with the device's proximity sensor or screen auto-dimming feature",
+          "vi": "Lỗi cảm biến tiệm cận / tự tắt màn khi áp tai"
+        },
+        {
+          "code": "0X1D4",
+          "en": "Indicates a problem with the device's gyroscope or orientation sensor",
+          "vi": "Lỗi con quay / cảm biến phương hướng"
+        },
+        {
+          "code": "0X1E4",
+          "en": "Indicates a problem with the device's barometer or altitude sensor",
+          "vi": "Lỗi cảm biến khí áp (Barometer) / cảm biến độ cao"
+        },
+        {
+          "code": "0X1F4",
+          "en": "Indicates a problem with the device's thermometer or temperature sensor",
+          "vi": "Lỗi cảm biến nhiệt độ"
+        },
+        {
+          "code": "0XD4",
+          "en": "Indicates a problem with the device's ambient temperature sensor",
+          "vi": "Lỗi cảm biến nhiệt độ môi trường"
+        },
+        {
+          "code": "0XE4",
+          "en": "Indicates a problem with the device's humidity sensor",
+          "vi": "Lỗi cảm biến độ ẩm"
+        },
+        {
+          "code": "0XF4",
+          "en": "Indicates a problem with the device's pressure sensor",
+          "vi": "Lỗi cảm biến áp suất"
+        },
+        {
+          "code": "0XA4",
+          "en": "Indicates a problem with the device's touch screen or digitizer",
+          "vi": "Lỗi cảm ứng / digitizer"
+        },
+        {
+          "code": "0XB4",
+          "en": "Indicates a problem with the device's SIM card or cellular connectivity",
+          "vi": "Lỗi khe SIM / kết nối di động"
+        },
+        {
+          "code": "0XC4",
+          "en": "Indicates a problem with the device's fingerprint sensor or biometric authentication",
+          "vi": "Lỗi cảm biến vân tay / xác thực sinh trắc"
+        },
+        {
+          "code": "0XD1",
+          "en": "Indicates a problem with the device's vibration motor or haptic feedback",
+          "vi": "Lỗi mô tơ rung / Taptic Engine"
+        },
+        {
+          "code": "0XE1",
+          "en": "Indicates a problem with the device's ambient light sensor or proximity sensor",
+          "vi": "Lỗi cảm biến ánh sáng môi trường / cảm biến tiệm cận"
+        },
+        {
+          "code": "0XF1",
+          "en": "Indicates a problem with the device's gyroscope or accelerometer",
+          "vi": "Lỗi con quay / cảm biến gia tốc"
+        },
+        {
+          "code": "0XA1",
+          "en": "Indicates a problem with the device's GPS or location services",
+          "vi": "Lỗi GPS / dịch vụ định vị"
+        },
+        {
+          "code": "0XB1",
+          "en": "Indicates a problem with the device's Touch ID or Face ID functionality",
+          "vi": "Lỗi Touch ID / Face ID"
+        },
+        {
+          "code": "0XC1",
+          "en": "Indicates a problem with the device's microphone or audio input",
+          "vi": "Lỗi mic / cổng thu âm"
+        },
+        {
+          "code": "0Xa1",
+          "en": "Battery Communications",
+          "vi": "Giao tiếp pin (Battery Communications)"
+        },
+        {
+          "code": "0XC0000",
+          "en": "It's the Prox Flex & Charging Port Flex",
+          "vi": "Cáp tiệm cận + Cáp chân sạc"
+        },
+        {
+          "code": "0X100000",
+          "en": "It's the Power Button Flex / Charging Port Flex",
+          "vi": "Cáp nút nguồn / Cáp chân sạc"
+        },
+        {
+          "code": "0X1C0000",
+          "en": "It's the Charging Port & Power Button Flex & Prox Flex",
+          "vi": "Cáp chân sạc + Cáp nút nguồn + Cáp tiệm cận"
+        },
+        {
+          "code": "0X200000",
+          "en": "It's the Proximity Flex Cable",
+          "vi": "Cáp cảm biến tiệm cận"
+        },
+        {
+          "code": "0X280000",
+          "en": "Charging flex & wireless charging flex",
+          "vi": "Cáp chân sạc + Cáp sạc không dây"
+        },
+        {
+          "code": "0X300000",
+          "en": "It's the Proximity Flex Cable / Indicates camera or imaging system issues",
+          "vi": "Cáp tiệm cận / Lỗi camera"
+        },
+        {
+          "code": "0X400000",
+          "en": "Wireless Charging Flex (back glass)",
+          "vi": "Cáp sạc không dây (mặt lưng kính)"
+        },
+        {
+          "code": "0X500000",
+          "en": "Battery Communications / NFC",
+          "vi": "Giao tiếp pin / NFC"
+        },
+        {
+          "code": "0X600000",
+          "en": "Wireless charging flex & proximity flex",
+          "vi": "Cáp sạc không dây + Cáp tiệm cận"
+        },
+        {
+          "code": "0X700000",
+          "en": "Charging flex & wireless charging flex",
+          "vi": "Cáp chân sạc + Cáp sạc không dây"
+        },
+        {
+          "code": "0X800000",
+          "en": "Software-related issues",
+          "vi": "Lỗi phần mềm"
+        },
+        {
+          "code": "0XA00000",
+          "en": "Battery-related issues",
+          "vi": "Lỗi liên quan đến pin"
+        },
+        {
+          "code": "0XB00000",
+          "en": "Audio-related issues (speakers, microphones, headphone jack)",
+          "vi": "Lỗi âm thanh (loa, mic, jack tai nghe)"
+        },
+        {
+          "code": "0XC00000",
+          "en": "Security features (Touch ID, Face ID, or Secure Enclave)",
+          "vi": "Bảo mật (Touch ID, Face ID, hoặc Secure Enclave)"
+        },
+        {
+          "code": "0XD00000",
+          "en": "Sensor issues (accelerometer, gyroscope, proximity, or ambient light)",
+          "vi": "Lỗi cảm biến (gia tốc, con quay, tiệm cận, ánh sáng)"
+        },
+        {
+          "code": "0XF00000",
+          "en": "Miscellaneous hardware issues (buttons, connectors, overall integrity)",
+          "vi": "Lỗi phần cứng tổng hợp (nút, đầu nối, kết cấu tổng thể)"
+        }
+      ]
+    },
+    "watchdog": {
+      "title": "Userspace watchdog timeout",
+      "title_vi": "Lỗi watchdog (treo tiến trình)",
+      "entries": [
+        {
+          "code": "TT1P / TT2P",
+          "en": "Screen",
+          "vi": "Màn hình"
+        },
+        {
+          "code": "TG0B",
+          "en": "Battery No Data",
+          "vi": "Pin không có dữ liệu"
+        },
+        {
+          "code": "TP3R",
+          "en": "NTC Problem",
+          "vi": "Lỗi NTC (cảm biến nhiệt pin)"
+        },
+        {
+          "code": "TP1A",
+          "en": "Battery Failure",
+          "vi": "Pin hỏng"
+        },
+        {
+          "code": "TP2A / TP3R / TP4H",
+          "en": "Battery/Screen",
+          "vi": "Pin / Màn hình"
+        },
+        {
+          "code": "TP2C",
+          "en": "Battery/Screen",
+          "vi": "Pin / Màn hình"
+        },
+        {
+          "code": "TG0V / TTSA",
+          "en": "Charging Port Flex",
+          "vi": "Cáp chân sạc"
+        },
+        {
+          "code": "Prs0",
+          "en": "Charging Port Flex / U7400",
+          "vi": "Cáp chân sạc / IC U7400"
+        },
+        {
+          "code": "MIC1",
+          "en": "Charging Port Flex",
+          "vi": "Cáp chân sạc"
+        },
+        {
+          "code": "MIC2",
+          "en": "Power Key Flex",
+          "vi": "Cáp nút nguồn"
+        },
+        {
+          "code": "SpringBoard",
+          "en": "Restore",
+          "vi": "Restore (khôi phục lại iOS)"
+        },
+        {
+          "code": "600seconds",
+          "en": "Hard Disk (Nand)",
+          "vi": "Bộ nhớ (Nand)"
+        },
+        {
+          "code": "Without the above code",
+          "en": "U2 Priority (TRISTAR-HYDRA)",
+          "vi": "Ưu tiên kiểm tra U2 (Tristar/Hydra - IC sạc)"
+        }
+      ]
+    },
+    "i2c": {
+      "title": "i2c Bus",
+      "title_vi": "Lỗi bus i2c (giao tiếp giữa chip)",
+      "entries": [
+        {
+          "code": "i2c0",
+          "cpu": "A8 Series (iPhone 6 / 6 Plus)",
+          "vi": "U1202, U1501, U1502, U1700"
+        },
+        {
+          "code": "i2c0",
+          "cpu": "A9 Series (iPhone 6s / 6s Plus)",
+          "vi": "U2000, U4000, U4020"
+        },
+        {
+          "code": "i2c0",
+          "cpu": "A10 Series (iPhone 7 / 7 Plus)",
+          "vi": "U1801, U3703, U3701, U4001, U2301"
+        },
+        {
+          "code": "i2c0",
+          "cpu": "A11 Series (iPhone 8 / 8 Plus / X)",
+          "vi": "U2700, U5600, U5660, U6110, J6400"
+        },
+        {
+          "code": "i2c0",
+          "cpu": "A12 Series (iPhone Xs / Xs Max / XR)",
+          "vi": "U2700, U6110, J6400"
+        },
+        {
+          "code": "i2c1",
+          "cpu": "A8 Series",
+          "vi": "U1580, U1400, U1401, U1601, J2118"
+        },
+        {
+          "code": "i2c1",
+          "cpu": "A9 Series",
+          "vi": "U3800, U2300, U3700, U4500"
+        },
+        {
+          "code": "i2c1",
+          "cpu": "A10 Series",
+          "vi": "U1801, U2101, U4601"
+        },
+        {
+          "code": "i2c1",
+          "cpu": "A11 Series",
+          "vi": "J4300, J6400"
+        },
+        {
+          "code": "i2c1",
+          "cpu": "A12 Series",
+          "vi": "J4300"
+        },
+        {
+          "code": "i2c2",
+          "cpu": "A8 Series",
+          "vi": "J1111, J2019"
+        },
+        {
+          "code": "i2c2",
+          "cpu": "A9 Series",
+          "vi": "J3100, J4200, U4050"
+        },
+        {
+          "code": "i2c2",
+          "cpu": "A10 Series",
+          "vi": "U3301, J4503"
+        },
+        {
+          "code": "i2c2",
+          "cpu": "A11 Series",
+          "vi": "U3301, J4200, U5000"
+        },
+        {
+          "code": "i2c2",
+          "cpu": "A12 Series",
+          "vi": "U5002"
+        },
+        {
+          "code": "i2c3",
+          "cpu": "A10 Series",
+          "vi": "Chân tail, Mic sau hoặc Màn hình"
+        },
+        {
+          "code": "i2c3",
+          "cpu": "A11 Series (iPhone 8 / 8 Plus)",
+          "vi": "Chân tail, Socket màn, Màn, IC đèn nền (U5650)"
+        },
+        {
+          "code": "i2c3",
+          "cpu": "A11 Series (iPhone X)",
+          "vi": "Nguồn màn, Cảm ứng, Đế cảm ứng"
+        },
+        {
+          "code": "i2c3",
+          "cpu": "A12 Series",
+          "vi": "Nguồn màn, Cảm ứng, Đế cảm ứng"
+        },
+        {
+          "code": "i2c4",
+          "cpu": "A11 Series",
+          "vi": "Chip logic"
+        },
+        {
+          "code": "i2c5",
+          "cpu": "A10 Series",
+          "vi": "Chip logic"
+        },
+        {
+          "code": "SMC i2c0",
+          "cpu": "A11 Series",
+          "vi": "U3100 / U3300 / U3400 / U6200 / J3200"
+        },
+        {
+          "code": "SMC i2c0",
+          "cpu": "A12 Series",
+          "vi": "U3300 / U3400 / U6200 / J3200"
+        },
+        {
+          "code": "SMC i2c1",
+          "cpu": "A11 Series",
+          "vi": "IC nguồn chính USB"
+        },
+        {
+          "code": "SMC i2c1",
+          "cpu": "A12 Series",
+          "vi": "IC nguồn chính USB"
+        }
+      ]
+    },
+    "aop": {
+      "title": "AOP PANIC",
+      "title_vi": "Lỗi AOP (vi xử lý luôn bật)",
+      "entries": [
+        {
+          "code": "SCMto",
+          "en": "Vibration Motor",
+          "vi": "Mô tơ rung"
+        },
+        {
+          "code": "Systick watchdog",
+          "en": "Big Audio IC",
+          "vi": "IC âm thanh lớn (Audio bự)"
+        },
+        {
+          "code": "Systick watchdog2 not pet",
+          "en": "Gyroscope",
+          "vi": "Con quay hồi chuyển (Gyro)"
+        },
+        {
+          "code": "No pulse on",
+          "en": "Big Audio IC / Front Speaker / Vibration",
+          "vi": "IC âm thanh lớn / Loa thoại / Mô tơ rung"
+        },
+        {
+          "code": "AMCC ERROR",
+          "en": "Front Speaker",
+          "vi": "Loa thoại"
+        },
+        {
+          "code": "AOP PANIC (7P)",
+          "en": "Proximity Sensor / Rear MIC (iPhone 7 Plus) / Power Button Flex / Fingerprint (Touch ID)",
+          "vi": "Cảm biến tiệm cận / Mic sau (7 Plus) / Cáp nút nguồn / Vân tay (Touch ID)"
+        },
+        {
+          "code": "( AOP PANIC )",
+          "en": "Big Audio IC / Screen Failure",
+          "vi": "IC âm thanh lớn / Lỗi màn hình"
+        },
+        {
+          "code": "AOP DATA ABORT",
+          "en": "Hard Drive (Nand Flash) / CPU Solder Joint (Reball CPU)",
+          "vi": "Bộ nhớ (Nand) / Mối hàn CPU (cần đóng lại chip CPU)"
+        },
+        {
+          "code": "AOP data link CMD timeout;bus 0",
+          "en": "AOP data link CMD timeout;bus 0",
+          "vi": "Lỗi timeout đường dữ liệu AOP - bus 0"
+        },
+        {
+          "code": "K2-bosch control",
+          "en": "Vibrator (Taptic Engine)",
+          "vi": "Mô tơ rung (Taptic Engine)"
+        },
+        {
+          "code": "PressureController.cpp:280",
+          "en": "Layer inspection L3302 / Rear Camera / Distance Sensor / Rear MIC (7P Boot Cable) / Damaged Fingerprint Flex",
+          "vi": "Kiểm tra lớp main L3302 / Camera sau / Cảm biến khoảng cách / Mic sau (Cáp boot 7P) / Cáp vân tay hỏng"
+        }
+      ]
+    }
+  },
+  "alphabet": {
+    "A": [
+      {
+        "code": "Attemping to forcibly halt CPU",
+        "en": "CPU Solder Joint (Requires CPU Reballing)",
+        "vi": "Mối hàn CPU (cần đóng lại chip CPU - Reball)"
+      },
+      {
+        "code": "AMCC Error",
+        "en": "Light-Sensitive Sensor / Ambient Light Sensor",
+        "vi": "Cảm biến ánh sáng / Cảm biến ánh sáng môi trường"
+      },
+      {
+        "code": "AppleBCMWLAN",
+        "en": "WiFi / Bluetooth Module",
+        "vi": "Module WiFi / Bluetooth"
+      },
+      {
+        "code": "Anc-postnand.c1260 asser failed link",
+        "en": "Nand Problem (Hard Disk)",
+        "vi": "Lỗi bộ nhớ Nand"
+      },
+      {
+        "code": "AGXK AGXAcceletor",
+        "en": "AppleSOC Overheating / Gyroscope / Accelerator / Coprocessor / WiFi / Big Audio IC / CPU Reballing",
+        "vi": "Quá nhiệt CPU Apple / Con quay / Cảm biến gia tốc / Đồng xử lý / WiFi / IC âm thanh lớn / Reball CPU"
+      },
+      {
+        "code": "ANS",
+        "en": "Hard Disk Circuit or Board Layer",
+        "vi": "Mạch bộ nhớ hoặc lớp main"
+      },
+      {
+        "code": "ANS2",
+        "en": "Hard Disk Circuit or Board Layer",
+        "vi": "Mạch bộ nhớ hoặc lớp main"
+      },
+      {
+        "code": "AOP NMI POWER",
+        "en": "Front Flex Cable / Power Button Cable",
+        "vi": "Cáp mặt trước / Cáp nút nguồn"
+      },
+      {
+        "code": "Apple PMGR",
+        "en": "Battery",
+        "vi": "Pin"
+      },
+      {
+        "code": "Apple PPM",
+        "en": "Charging IC / Battery Conversion Circuit",
+        "vi": "IC sạc / Mạch chuyển đổi pin"
+      },
+      {
+        "code": "apcie (wlan)",
+        "en": "WiFi Module",
+        "vi": "Module WiFi"
+      },
+      {
+        "code": "A freed zone element has been modified",
+        "en": "CPU Solder Joint (Requires CPU Reballing)",
+        "vi": "Mối hàn CPU (cần Reball CPU)"
+      },
+      {
+        "code": "A kext releasing",
+        "en": "First consider the CPU Inductance",
+        "vi": "Ưu tiên kiểm tra cuộn cảm CPU"
+      },
+      {
+        "code": "apcie(0:s3e)",
+        "en": "Hard Disk (Nand)",
+        "vi": "Bộ nhớ (Nand)"
+      },
+      {
+        "code": "AppleHIDTransportProtocol",
+        "en": "Screen / Display Circuit",
+        "vi": "Màn hình / Mạch màn hình"
+      },
+      {
+        "code": "APFS_TREE",
+        "en": "Hard Disk (Nand)",
+        "vi": "Bộ nhớ (Nand)"
+      }
+    ],
+    "B": [
+      {
+        "code": "Busy timeout",
+        "en": "Pmic / Audio",
+        "vi": "IC nguồn (PMIC) / Âm thanh"
+      },
+      {
+        "code": "Bad tallq elm",
+        "en": "Main Crystal Oscillator / Wide-Angle Camera / Screen",
+        "vi": "Thạch anh chính / Camera góc rộng / Màn hình"
+      },
+      {
+        "code": "BASEBAND",
+        "en": "Baseband Part",
+        "vi": "Khối baseband (modem sóng)"
+      }
+    ],
+    "C": [
+      {
+        "code": "cluster_push err:expectedNULL",
+        "en": "Load SoftWare",
+        "vi": "Nạp lại phần mềm"
+      },
+      {
+        "code": "Coherency point error",
+        "en": "Check The Rear Camera",
+        "vi": "Kiểm tra camera sau"
+      },
+      {
+        "code": "CP_COM_NORM REQUEST",
+        "en": "CPU Hard Disk / Camera Circuit",
+        "vi": "Khối CPU - bộ nhớ / Mạch camera"
+      },
+      {
+        "code": "CSL AUDIO",
+        "en": "Audio Related",
+        "vi": "Liên quan đến âm thanh"
+      },
+      {
+        "code": "CAN Snoop",
+        "en": "Ply Stub",
+        "vi": "Mỏ hàn / Đầu hàn lớp main"
+      }
+    ],
+    "D": [
+      {
+        "code": "DCP PANIC",
+        "en": "Charging flex",
+        "vi": "Cáp chân sạc"
+      },
+      {
+        "code": "DPC err UNKNOWN:multiple) on E-core",
+        "en": "PMU Buck, Voltage or CPU",
+        "vi": "PMU Buck, điện áp hoặc CPU"
+      },
+      {
+        "code": "Dart-disp0 SMMU error",
+        "en": "Rear Camera",
+        "vi": "Camera sau"
+      },
+      {
+        "code": "DPC err",
+        "en": "Hard disk and baseband circuit, crystal oscillator",
+        "vi": "Mạch bộ nhớ + mạch baseband, thạch anh"
+      }
+    ],
+    "E": [
+      {
+        "code": "Ememory",
+        "en": "Hard Disk or Hard Disk Related Circuit",
+        "vi": "Bộ nhớ hoặc mạch liên quan đến bộ nhớ"
+      },
+      {
+        "code": "enableHalogen:3833 Unknow sample rate on DAC",
+        "en": "Audio",
+        "vi": "Âm thanh"
+      }
+    ],
+    "F": [
+      {
+        "code": "Firmware fatal",
+        "en": "Firmware or Underlying or Power Button Line",
+        "vi": "Firmware / Lớp dưới / Đường nút nguồn"
+      },
+      {
+        "code": "fed err(parity counter overflow multi hit ICTAG)",
+        "en": "Hard Disk",
+        "vi": "Bộ nhớ"
+      },
+      {
+        "code": "Fatal coherency point error CP_com_NORM",
+        "en": "BUCK CPU Power Supply Problem, CPU Side Inductance",
+        "vi": "Lỗi nguồn BUCK cấp cho CPU, cuộn cảm cạnh CPU"
+      }
+    ],
+    "H": [
+      {
+        "code": "Halt\\Restart Timed out",
+        "en": "Tail Plug / Earphone Amplifier",
+        "vi": "Chân tail / IC khuếch đại tai nghe"
+      }
+    ],
+    "I": [
+      {
+        "code": "Iokit",
+        "en": "Iokit",
+        "vi": "Iokit (driver hệ thống)"
+      },
+      {
+        "code": "Initproc exited -- exit",
+        "en": "Try Software or CPU Reball",
+        "vi": "Thử phần mềm hoặc Reball CPU"
+      },
+      {
+        "code": "Invaild queue element linkage",
+        "en": "The Hard Disk is Welded or Damaged",
+        "vi": "Bộ nhớ bị bong chân hoặc hỏng"
+      },
+      {
+        "code": "Initproc exited",
+        "en": "Main crystal failure",
+        "vi": "Thạch anh chính hỏng"
+      },
+      {
+        "code": "IOMFB int hander",
+        "en": "Screen or screen 0.8V power supply 16",
+        "vi": "Màn hình hoặc nguồn 0.8V cấp màn"
+      }
+    ],
+    "K": [
+      {
+        "code": "Key hdr kind!=NEW",
+        "en": "Display IC",
+        "vi": "IC màn hình"
+      },
+      {
+        "code": "Kernel data abort",
+        "en": "Restore / Hard Disk / Board Layer",
+        "vi": "Restore / Bộ nhớ / Lớp main"
+      }
+    ],
+    "L": [
+      {
+        "code": "L2C",
+        "en": "WIFI / Audio Amplification",
+        "vi": "WiFi / Khuếch đại âm thanh"
+      },
+      {
+        "code": "LLC Bus error from cpu3 : FAR",
+        "en": "Abnormal Communication between CPU and WiFi",
+        "vi": "Giao tiếp bất thường giữa CPU và WiFi"
+      },
+      {
+        "code": "LSU",
+        "en": "Wifi",
+        "vi": "WiFi"
+      },
+      {
+        "code": "LLC",
+        "en": "Baseband Circuitry Possibly Audio",
+        "vi": "Mạch baseband, có thể là âm thanh"
+      },
+      {
+        "code": "lop_rinobuffer",
+        "en": "Audio Related",
+        "vi": "Liên quan đến âm thanh"
+      }
+    ],
+    "M": [
+      {
+        "code": "Menorystaus_jetsam_thread",
+        "en": "Hard Disk",
+        "vi": "Bộ nhớ"
+      },
+      {
+        "code": "Mbuf_watchdog:12 waiters stuck",
+        "en": "Boot Cable / Tail Plug / Power Button",
+        "vi": "Cáp boot / Chân tail / Nút nguồn"
+      },
+      {
+        "code": "mubf_watchdog:2waiters stuck",
+        "en": "Hard Disk has bad sectors",
+        "vi": "Bộ nhớ bị bad sector"
+      }
+    ],
+    "N": [
+      {
+        "code": "Nvme",
+        "en": "Hard Disk",
+        "vi": "Bộ nhớ"
+      },
+      {
+        "code": "NO pulse on",
+        "en": "Vibration / Pulse (ring vibration)",
+        "vi": "Mô tơ rung / Tín hiệu rung khi có chuông"
+      }
+    ],
+    "P": [
+      {
+        "code": "Pmap_enter_pv. unexpected PV head",
+        "en": "Earpiece Row, Small Audio",
+        "vi": "Hàng loa thoại, âm thanh nhỏ"
+      },
+      {
+        "code": "PMP NMI FIQ",
+        "en": "CPU Power Supply",
+        "vi": "Nguồn cấp cho CPU"
+      },
+      {
+        "code": "Pre, next",
+        "en": "Main Crystal Failure",
+        "vi": "Thạch anh chính hỏng"
+      }
+    ],
+    "R": [
+      {
+        "code": "Reset sequence did not finish within S000ms",
+        "en": "Abnormal Communication between CPU and WiFi",
+        "vi": "Giao tiếp bất thường giữa CPU và WiFi"
+      },
+      {
+        "code": "Rtunref Bad refcnt",
+        "en": "Hard Disk",
+        "vi": "Bộ nhớ"
+      },
+      {
+        "code": "RTBuddy ( AOP ) setmanagedGated",
+        "en": "Battery Holder",
+        "vi": "Khay pin"
+      },
+      {
+        "code": "Releasing non_exclusive",
+        "en": "CPU Inductor",
+        "vi": "Cuộn cảm CPU"
+      }
+    ],
+    "S": [
+      {
+        "code": "Sep memory protection module error",
+        "en": "EEPROM (Screen / CPU / Baseband)",
+        "vi": "EEPROM (Màn / CPU / Baseband)"
+      },
+      {
+        "code": "SEP ROM",
+        "en": "FingerPrint ROM / Logic Chip",
+        "vi": "ROM vân tay / Chip logic"
+      },
+      {
+        "code": "Sep ROM boot Panic [Scrubbed",
+        "en": "EEPROM CPU, Resistors, or CPU",
+        "vi": "EEPROM của CPU, điện trở hoặc CPU"
+      },
+      {
+        "code": "SEP Panic: :dxio/ I2C : 0X100007785",
+        "en": "EEPROM CPU, Resistors, or CPU",
+        "vi": "EEPROM của CPU, điện trở hoặc CPU"
+      },
+      {
+        "code": "SEP Panic: :sars/ sars: 0X10000f439",
+        "en": "EEPROM CPU, Resistors, or CPU",
+        "vi": "EEPROM của CPU, điện trở hoặc CPU"
+      },
+      {
+        "code": "SMC DATA ABORT",
+        "en": "Abnormal CPU Communication",
+        "vi": "Giao tiếp CPU bất thường"
+      },
+      {
+        "code": "Stacks+routined-2019 01 29",
+        "en": "The iPad is mostly caused by the Battery Screw post being too long (Special iPad issue)",
+        "vi": "iPad: thường do ốc vít gắn pin quá dài (Lỗi đặc trưng iPad)"
+      },
+      {
+        "code": "sks request timeout",
+        "en": "CPU to Logic Code Fragment Line / EEPROM",
+        "vi": "Đường code logic từ CPU / EEPROM"
+      },
+      {
+        "code": "Sleep \\wake hang detected",
+        "en": "Battery, Audio CPU Powered",
+        "vi": "Pin, nguồn cấp CPU âm thanh"
+      },
+      {
+        "code": "SEP panic:: daio/i2c",
+        "en": "Down Antenna Problem",
+        "vi": "Lỗi anten dưới"
+      },
+      {
+        "code": "SMC PANIC",
+        "en": "CPU Power Supply Check Inductance",
+        "vi": "Nguồn CPU - kiểm tra cuộn cảm"
+      },
+      {
+        "code": "Spmi timeout",
+        "en": "Audio Related",
+        "vi": "Liên quan đến âm thanh"
+      },
+      {
+        "code": "SEP Panic sars/sars",
+        "en": "Earpiece Row, Small Audio",
+        "vi": "Hàng loa thoại, âm thanh nhỏ"
+      }
+    ],
+    "T": [
+      {
+        "code": "Timeout waiting for stop to IDLE on EP",
+        "en": "Screen",
+        "vi": "Màn hình"
+      },
+      {
+        "code": "Trying to change a collection in the registry",
+        "en": "Just Flash",
+        "vi": "Chỉ cần nạp lại phần mềm"
+      }
+    ],
+    "V": [
+      {
+        "code": "Void applesynopsysMIPID SIController",
+        "en": "Front Cable",
+        "vi": "Cáp trước"
+      }
+    ],
+    "W": [
+      {
+        "code": "WDT timeout",
+        "en": "Battery or Battery Connector",
+        "vi": "Pin hoặc connector pin"
+      },
+      {
+        "code": "WKDMD ERROR code 0x2",
+        "en": "Flashing error 14 / Hard Disk (Nand Flash)",
+        "vi": "Lỗi flash 14 / Bộ nhớ (Nand)"
+      }
+    ]
+  }
+}
