@@ -2,21 +2,28 @@
 Linhkienip.vn Panic Bot - Tra cứu mã lỗi panic log iPhone
 Dùng cho thợ sửa main của Linhkienip.vn
 
+Tính năng:
+- Menu phân loại + search text
+- 📷 OCR: thợ gửi ảnh panic log → bot tự đọc mã + tra cứu
+
 Cài đặt:
     pip install -r requirements.txt
 
 Chạy:
     export BOT_TOKEN="your_token_from_botfather"
+    export OCR_API_KEY="your_key_from_ocr.space"  # optional, dùng "helloworld" nếu trống
     python linhkienip_bot.py
 """
 import html
 import json
 import logging
 import os
+import re
 from pathlib import Path
 
+import httpx
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.constants import ParseMode
+from telegram.constants import ChatAction, ParseMode
 from telegram.ext import (
     Application,
     CallbackQueryHandler,
@@ -43,6 +50,15 @@ CATEGORIES = DATA["categories"]
 ALPHABET_DATA = DATA["alphabet"]
 ALPHABET_LETTERS = sorted(ALPHABET_DATA.keys())
 
+# Build a flat set of all panic code names (for OCR matching)
+ALL_PANIC_CODES = set()
+for _cat in CATEGORIES.values():
+    for _entry in _cat["entries"]:
+        ALL_PANIC_CODES.add(_entry["code"])
+for _entries in ALPHABET_DATA.values():
+    for _entry in _entries:
+        ALL_PANIC_CODES.add(_entry["code"])
+
 # ============================================================
 # BRAND & STYLING
 # ============================================================
@@ -61,6 +77,7 @@ WELCOME_TEXT = (
     "• Chọn nhóm lỗi bên dưới\n"
     "• Hoặc gõ trực tiếp mã lỗi vào ô chat\n"
     "    (vd: <code>AOP</code>, <code>SMC</code>, <code>0x80000</code>)\n"
+    "• 📷 <b>Hoặc gửi ảnh panic log</b> - bot tự đọc & tra cứu\n"
     "• Hoặc tra theo chữ cái A–Z\n\n"
     "📚 <i>199+ mã lỗi đã việt hóa</i>\n"
     f"🌐 <i>{BRAND_URL}</i>"
@@ -109,7 +126,6 @@ def category_list_keyboard(cat_key: str) -> InlineKeyboardMarkup:
 
 
 def alphabet_keyboard() -> InlineKeyboardMarkup:
-    """Grid of A-Z letters, 6 per row for compact look."""
     rows = []
     row = []
     for letter in ALPHABET_LETTERS:
@@ -171,15 +187,20 @@ HELP_TEXT = (
     "<b>1️⃣  Tra cứu theo nhóm</b>\n"
     "• <b>AOP Panic</b> - Vi xử lý luôn bật\n"
     "• <b>SMC Sensor Array</b> - Mã hex cảm biến\n"
-    "• <b>i2c</b> - Bus giao tiếp giữa chip (theo dòng A8–A12)\n"
+    "• <b>i2c</b> - Bus giao tiếp (dòng A8–A12)\n"
     "• <b>Watchdog timeout</b> - Treo tiến trình\n"
-    "• <b>A–Z</b> - Theo chữ cái đầu của mã lỗi\n\n"
-    "<b>2️⃣  Tìm kiếm nhanh</b>\n"
+    "• <b>A–Z</b> - Theo chữ cái đầu\n\n"
+    "<b>2️⃣  Tìm kiếm bằng text</b>\n"
     "Gõ trực tiếp vào ô chat:\n"
-    "• Mã lỗi EN: <code>AOP PANIC</code>\n"
+    "• Mã EN: <code>AOP PANIC</code>\n"
     "• Mã hex: <code>0x80000</code>, <code>0x41</code>\n"
-    "• Từ khóa Việt: <code>pin</code>, <code>màn hình</code>, <code>camera</code>\n\n"
-    "<b>3️⃣  Lệnh hệ thống</b>\n"
+    "• Từ khóa Việt: <code>pin</code>, <code>màn hình</code>\n\n"
+    "<b>3️⃣  📷 Tìm kiếm bằng ảnh (OCR)</b>\n"
+    "• Chụp/screenshot panic log từ máy\n"
+    "• Gửi ảnh vào bot\n"
+    "• Bot tự đọc text + tra cứu mã lỗi\n"
+    "<i>Tip: ảnh rõ, không bị mờ sẽ đọc tốt hơn</i>\n\n"
+    "<b>4️⃣  Lệnh hệ thống</b>\n"
     "• <code>/start</code> - Mở menu chính\n"
     "• <code>/help</code> - Hướng dẫn này"
     f"{footer()}"
@@ -207,6 +228,8 @@ async def cmd_help(update: Update, context: ContextTypes.DEFAULT_TYPE):
 def search_all(query: str) -> list:
     """Search across all entries. Returns list of (label, callback_data, category_label)."""
     q = query.lower().strip()
+    if len(q) < 2:
+        return []
     results = []
 
     for cat_key, cat in CATEGORIES.items():
@@ -252,7 +275,8 @@ async def on_text_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "<b>Thử lại với:</b>\n"
             "• Một phần của mã lỗi (vd: <code>AOP</code>, <code>SMC</code>)\n"
             "• Mã hex (vd: <code>0x80000</code>, <code>0x41</code>)\n"
-            "• Từ khóa Việt (vd: <code>pin</code>, <code>màn hình</code>)"
+            "• Từ khóa Việt (vd: <code>pin</code>, <code>màn hình</code>)\n"
+            "• 📷 Hoặc gửi ảnh panic log"
             f"{footer()}"
         )
         await update.message.reply_text(
@@ -287,6 +311,235 @@ async def on_text_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ============================================================
+# OCR: Photo → Panic Codes
+# ============================================================
+OCR_API_KEY = os.environ.get("OCR_API_KEY", "helloworld")
+OCR_API_URL = "https://api.ocr.space/parse/image"
+OCR_TIMEOUT = 60
+
+# Regex để tìm mã hex (0x..., 0X...)
+HEX_PATTERN = re.compile(r"0[xX][0-9a-fA-F]{2,8}")
+
+# Từ khóa nhận diện loại panic phổ biến (case-insensitive)
+PANIC_KEYWORDS = [
+    "AOP PANIC", "AOP DATA ABORT", "AOP NMI",
+    "SMC PANIC", "SMC DATA ABORT",
+    "SEP PANIC", "SEP ROM", "Sep memory",
+    "DCP PANIC", "Dart-disp",
+    "AMCC ERROR", "Apple PMGR", "Apple PPM", "AppleBCMWLAN",
+    "AppleHIDTransport", "AGXK", "APFS", "apcie",
+    "ANS", "Anc-postnand",
+    "i2c0", "i2c1", "i2c2", "i2c3", "i2c4", "i2c5",
+    "Nvme", "NVMe",
+    "Userspace watchdog", "Systick watchdog", "Mbuf_watchdog", "WDT timeout",
+    "Kernel data abort", "Firmware fatal",
+    "Baseband", "Iokit", "Initproc", "IOMFB",
+    "SpringBoard", "PressureController",
+    "PMP NMI", "Pmap_enter",
+    "Halt", "Spmi timeout", "Sleep",
+    "Coherency point", "Reset sequence",
+    "AOP", "SMC", "SEP", "DCP",
+]
+
+
+async def ocr_image(image_bytes: bytes) -> str:
+    """Send image to OCR.space API, return extracted text."""
+    async with httpx.AsyncClient(timeout=OCR_TIMEOUT) as client:
+        files = {"file": ("panic.jpg", image_bytes, "image/jpeg")}
+        data = {
+            "apikey": OCR_API_KEY,
+            "language": "eng",
+            "isOverlayRequired": "false",
+            "detectOrientation": "true",
+            "scale": "true",
+            "OCREngine": "2",  # Engine 2 tốt hơn cho screenshot/text rõ
+        }
+        r = await client.post(OCR_API_URL, files=files, data=data)
+        r.raise_for_status()
+        result = r.json()
+
+        if result.get("IsErroredOnProcessing"):
+            err = result.get("ErrorMessage", ["OCR error"])
+            if isinstance(err, list):
+                err = " ".join(str(e) for e in err)
+            raise RuntimeError(str(err))
+
+        parsed = result.get("ParsedResults") or []
+        if not parsed:
+            return ""
+        return parsed[0].get("ParsedText", "") or ""
+
+
+def extract_panic_signals(text: str) -> dict:
+    """Tìm các dấu hiệu panic từ text OCR."""
+    text_upper = text.upper()
+
+    # Mã hex
+    hex_codes = list(dict.fromkeys(HEX_PATTERN.findall(text)))
+
+    # Khớp tên panic code đầy đủ từ database (substring match)
+    exact_matches = []
+    for code in ALL_PANIC_CODES:
+        if len(code) >= 5 and code.upper() in text_upper:
+            exact_matches.append(code)
+    # Sort by length desc - longer matches are more specific
+    exact_matches.sort(key=len, reverse=True)
+
+    # Khớp từ khóa category
+    keyword_matches = []
+    seen_kw = set()
+    for kw in PANIC_KEYWORDS:
+        if kw.upper() in text_upper and kw.lower() not in seen_kw:
+            keyword_matches.append(kw)
+            seen_kw.add(kw.lower())
+
+    return {
+        "hex_codes": hex_codes[:8],
+        "exact_matches": exact_matches[:8],
+        "keywords": keyword_matches[:8],
+    }
+
+
+async def on_photo(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle photo uploads: OCR + search."""
+    msg = update.message
+
+    # Show typing/processing indicator
+    await context.bot.send_chat_action(
+        chat_id=msg.chat_id, action=ChatAction.TYPING
+    )
+
+    status = await msg.reply_text(
+        "📷 <i>Đang tải ảnh...</i>",
+        parse_mode=ParseMode.HTML,
+    )
+
+    try:
+        # Tải ảnh lớn nhất
+        photo = msg.photo[-1]
+        file = await context.bot.get_file(photo.file_id)
+        image_bytes = bytes(await file.download_as_bytearray())
+
+        # OCR
+        await status.edit_text(
+            "🔍 <i>Đang nhận diện text trong ảnh...</i>",
+            parse_mode=ParseMode.HTML,
+        )
+
+        ocr_text = await ocr_image(image_bytes)
+
+        if not ocr_text.strip():
+            await status.edit_text(
+                f"❌ <b>Không đọc được text trong ảnh</b>\n"
+                f"{DIVIDER}\n\n"
+                "Thử lại với:\n"
+                "• Ảnh rõ hơn, không bị mờ\n"
+                "• Chụp gần để chữ to hơn\n"
+                "• Hoặc gõ trực tiếp mã lỗi vào ô chat",
+                parse_mode=ParseMode.HTML,
+                reply_markup=InlineKeyboardMarkup([nav_buttons()]),
+            )
+            return
+
+        # Trích xuất dấu hiệu panic
+        signals = extract_panic_signals(ocr_text)
+
+        # Search database với các signals
+        all_results = []
+        seen_keys = set()
+
+        # Ưu tiên: exact matches > hex codes > keywords
+        for term in signals["exact_matches"]:
+            for r in search_all(term):
+                if r[1] not in seen_keys:
+                    seen_keys.add(r[1])
+                    all_results.append(r)
+
+        for hex_code in signals["hex_codes"]:
+            for r in search_all(hex_code):
+                if r[1] not in seen_keys:
+                    seen_keys.add(r[1])
+                    all_results.append(r)
+
+        for kw in signals["keywords"]:
+            for r in search_all(kw):
+                if r[1] not in seen_keys:
+                    seen_keys.add(r[1])
+                    all_results.append(r)
+
+        # Không tìm thấy gì
+        if not all_results:
+            preview = ocr_text[:200] + "…" if len(ocr_text) > 200 else ocr_text
+            preview = html.escape(preview)
+            await status.edit_text(
+                f"📷 <b>Đã đọc ảnh</b> nhưng không tìm thấy mã lỗi nào khớp database.\n"
+                f"{DIVIDER}\n\n"
+                f"<b>Text đọc được:</b>\n<code>{preview}</code>\n\n"
+                "💡 Thử gõ trực tiếp mã lỗi từ text trên vào ô chat.",
+                parse_mode=ParseMode.HTML,
+                reply_markup=InlineKeyboardMarkup([nav_buttons()]),
+            )
+            return
+
+        # Build response với kết quả
+        MAX = 15
+        shown = all_results[:MAX]
+        rows = []
+        for label, cb_data, category in shown:
+            text_label = label if len(label) < 50 else label[:47] + "…"
+            rows.append([InlineKeyboardButton(
+                f"{text_label}  ·  {category}", callback_data=cb_data
+            )])
+        rows.append(nav_buttons())
+
+        # Phần header tóm tắt signals tìm được
+        signals_lines = []
+        if signals["hex_codes"]:
+            codes_str = ", ".join(f"<code>{html.escape(c)}</code>"
+                                  for c in signals["hex_codes"][:5])
+            signals_lines.append(f"🔖 <b>Mã hex:</b> {codes_str}")
+        if signals["keywords"]:
+            kw_str = ", ".join(f"<code>{html.escape(k)}</code>"
+                               for k in signals["keywords"][:5])
+            signals_lines.append(f"🏷 <b>Từ khóa:</b> {kw_str}")
+
+        signals_text = "\n".join(signals_lines)
+        if signals_text:
+            signals_text = "\n" + signals_text + "\n"
+
+        header = (
+            f"📷 <b>Đọc ảnh panic log thành công</b>\n"
+            f"{DIVIDER}\n"
+            f"{signals_text}\n"
+            f"Tìm thấy <b>{len(all_results)}</b> mã lỗi khớp"
+        )
+        if len(all_results) > MAX:
+            header += f" <i>(hiển thị {MAX} đầu)</i>"
+        header += ":\n"
+
+        await status.edit_text(
+            header,
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup(rows),
+        )
+
+    except httpx.TimeoutException:
+        await status.edit_text(
+            "⏱ <b>OCR quá tải / timeout</b>\n\nThử lại sau 30 giây hoặc gõ mã lỗi trực tiếp.",
+            parse_mode=ParseMode.HTML,
+        )
+    except Exception as e:
+        logger.exception("OCR error")
+        await status.edit_text(
+            f"❌ <b>Lỗi khi xử lý ảnh</b>\n\n"
+            f"<code>{html.escape(str(e)[:200])}</code>\n\n"
+            "Thử lại hoặc gõ trực tiếp mã lỗi vào chat.",
+            parse_mode=ParseMode.HTML,
+            reply_markup=InlineKeyboardMarkup([nav_buttons()]),
+        )
+
+
+# ============================================================
 # CALLBACK HANDLER (button clicks)
 # ============================================================
 async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -315,7 +568,7 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"🔤 <b>Tra cứu theo chữ cái</b>\n"
             f"{DIVIDER}\n\n"
             "Chọn chữ cái đầu của mã lỗi.\n"
-            "<i>(Số sau dấu · là số lượng mã lỗi trong chữ cái đó)</i>"
+            "<i>(Số sau dấu · là số lượng mã lỗi)</i>"
         )
         await query.edit_message_text(
             text,
@@ -324,7 +577,6 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    # Category list: c:CATEGORY
     if data.startswith("c:"):
         cat_key = data[2:]
         if cat_key not in CATEGORIES:
@@ -348,7 +600,6 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    # Entry detail: e:CATEGORY:INDEX
     if data.startswith("e:"):
         _, cat_key, idx = data.split(":", 2)
         idx = int(idx)
@@ -366,7 +617,6 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    # Alphabet letter: a:LETTER
     if data.startswith("a:"):
         letter = data[2:]
         if letter not in ALPHABET_DATA:
@@ -389,7 +639,6 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    # Alphabet entry: ae:LETTER:INDEX
     if data.startswith("ae:"):
         _, letter, idx = data.split(":", 2)
         idx = int(idx)
@@ -418,11 +667,18 @@ def main():
             "  export BOT_TOKEN='your_token_from_botfather'"
         )
 
+    if OCR_API_KEY == "helloworld":
+        logger.warning(
+            "⚠ Đang dùng OCR_API_KEY mặc định (rate limit thấp). "
+            "Đăng ký key miễn phí tại https://ocr.space/ocrapi"
+        )
+
     app = Application.builder().token(token).build()
 
     app.add_handler(CommandHandler("start", cmd_start))
     app.add_handler(CommandHandler("help", cmd_help))
     app.add_handler(CallbackQueryHandler(on_callback))
+    app.add_handler(MessageHandler(filters.PHOTO, on_photo))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, on_text_message))
 
     logger.info(f"Bot {BRAND_NAME} khởi động...")
