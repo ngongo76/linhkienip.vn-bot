@@ -74,11 +74,10 @@ WELCOME_TEXT = (
     "👋 Chào thợ! Bot giúp tra cứu mã lỗi <b>panic log iPhone</b> "
     "để xác định chip hỏng nhanh chóng.\n\n"
     "📌 <b>Cách dùng:</b>\n"
-    "• Chọn nhóm lỗi bên dưới\n"
-    "• Hoặc gõ trực tiếp mã lỗi vào ô chat\n"
+    "• Chọn nhóm lỗi hoặc chữ cái bên dưới\n"
+    "• Hoặc gõ trực tiếp mã lỗi vào chat\n"
     "    (vd: <code>AOP</code>, <code>SMC</code>, <code>0x80000</code>)\n"
-    "• 📷 <b>Hoặc gửi ảnh panic log</b> - bot tự đọc & tra cứu\n"
-    "• Hoặc tra theo chữ cái A–Z\n\n"
+    "• 📷 <b>Hoặc gửi ảnh panic log</b> - bot tự đọc & tra cứu\n\n"
     "📚 <i>199+ mã lỗi đã việt hóa</i>\n"
     f"🌐 <i>{BRAND_URL}</i>"
 )
@@ -91,15 +90,47 @@ def footer() -> str:
 # ============================================================
 # KEYBOARDS
 # ============================================================
+# Each category's "back" target. Sensor Array sub-categories go back to SMC hub.
+BACK_TARGET = {
+    "sensor_1": "hub:smc",
+    "sensor_2": "hub:smc",
+}
+
+
 def main_menu_keyboard() -> InlineKeyboardMarkup:
+    """Main menu - layout giống iDoctor với SMC hub + alphabet 3-col."""
     rows = [
-        [InlineKeyboardButton("⚡  AOP Panic  ·  Vi xử lý luôn bật", callback_data="c:aop")],
-        [InlineKeyboardButton("🌡  SMC Sensor Array (1)", callback_data="c:sensor_1")],
-        [InlineKeyboardButton("🌡  SMC Sensor Array (2)", callback_data="c:sensor_2")],
-        [InlineKeyboardButton("🔌  i2c  ·  Bus giao tiếp giữa chip", callback_data="c:i2c")],
+        # SMC PANIC - ASSERTION (parent hub gộp 2 Sensor Array)
+        [InlineKeyboardButton("🌡  SMC PANIC – ASSERTION", callback_data="hub:smc")],
+        # Userspace watchdog (full row)
         [InlineKeyboardButton("⏱  Userspace Watchdog Timeout", callback_data="c:watchdog")],
-        [InlineKeyboardButton("🔤  Tra cứu theo chữ cái A–Z", callback_data="alpha")],
-        [InlineKeyboardButton("ℹ️  Hướng dẫn dùng bot", callback_data="help")],
+        # i2c | AOP PANIC (2 cột)
+        [
+            InlineKeyboardButton("🔌  i2c", callback_data="c:i2c"),
+            InlineKeyboardButton("⚡  AOP PANIC", callback_data="c:aop"),
+        ],
+    ]
+    # Alphabet 3 cột, đếm số mã lỗi mỗi chữ
+    row = []
+    for letter in ALPHABET_LETTERS:
+        count = len(ALPHABET_DATA[letter])
+        row.append(InlineKeyboardButton(f"{letter} · {count}", callback_data=f"a:{letter}"))
+        if len(row) == 3:
+            rows.append(row)
+            row = []
+    if row:
+        rows.append(row)
+    # Footer
+    rows.append([InlineKeyboardButton("ℹ️  Hướng dẫn dùng bot", callback_data="help")])
+    return InlineKeyboardMarkup(rows)
+
+
+def smc_hub_keyboard() -> InlineKeyboardMarkup:
+    """Submenu của SMC PANIC – ASSERTION."""
+    rows = [
+        [InlineKeyboardButton("Sensor Array (1)", callback_data="c:sensor_1")],
+        [InlineKeyboardButton("Sensor Array (2)", callback_data="c:sensor_2")],
+        nav_buttons(),
     ]
     return InlineKeyboardMarkup(rows)
 
@@ -121,22 +152,9 @@ def category_list_keyboard(cat_key: str) -> InlineKeyboardMarkup:
         if len(label) > 55:
             label = label[:52] + "…"
         rows.append([InlineKeyboardButton(label, callback_data=f"e:{cat_key}:{i}")])
-    rows.append(nav_buttons())
-    return InlineKeyboardMarkup(rows)
-
-
-def alphabet_keyboard() -> InlineKeyboardMarkup:
-    rows = []
-    row = []
-    for letter in ALPHABET_LETTERS:
-        count = len(ALPHABET_DATA[letter])
-        row.append(InlineKeyboardButton(f"{letter} · {count}", callback_data=f"a:{letter}"))
-        if len(row) == 6:
-            rows.append(row)
-            row = []
-    if row:
-        rows.append(row)
-    rows.append(nav_buttons())
+    # Back navigation: sensor_1/sensor_2 -> SMC hub, others -> main
+    back_target = BACK_TARGET.get(cat_key, "main")
+    rows.append(nav_buttons(back_target))
     return InlineKeyboardMarkup(rows)
 
 
@@ -148,10 +166,7 @@ def alphabet_letter_keyboard(letter: str) -> InlineKeyboardMarkup:
         if len(label) > 60:
             label = label[:57] + "…"
         rows.append([InlineKeyboardButton(label, callback_data=f"ae:{letter}:{i}")])
-    rows.append([
-        InlineKeyboardButton("◀ Quay lại A–Z", callback_data="alpha"),
-        InlineKeyboardButton("🏠 Menu chính", callback_data="main"),
-    ])
+    rows.append(nav_buttons())
     return InlineKeyboardMarkup(rows)
 
 
@@ -563,17 +578,17 @@ async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    if data == "alpha":
+    if data == "hub:smc":
         text = (
-            f"🔤 <b>Tra cứu theo chữ cái</b>\n"
+            f"🌡 <b>SMC PANIC – ASSERTION</b>\n"
             f"{DIVIDER}\n\n"
-            "Chọn chữ cái đầu của mã lỗi.\n"
-            "<i>(Số sau dấu · là số lượng mã lỗi)</i>"
+            "Lỗi từ chip điều khiển hệ thống SMC và cảm biến.\n"
+            "Chọn nhóm mã hex cảm biến:"
         )
         await query.edit_message_text(
             text,
             parse_mode=ParseMode.HTML,
-            reply_markup=alphabet_keyboard(),
+            reply_markup=smc_hub_keyboard(),
         )
         return
 
